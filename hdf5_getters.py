@@ -557,3 +557,12 @@ def get_everything(h5_file):
         data[name] = f(h5_file)
         
     return data
+
+def get_desired(h5_file, desired):
+    data = {}
+    for f, name in FUNCTION_DATA_PAIRS:
+        if name not in desired:
+            continue
+        data[name] = f(h5_file)
+        
+    return data
