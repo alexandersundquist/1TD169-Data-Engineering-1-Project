@@ -475,3 +475,85 @@ def get_year(h5,songidx=0):
     Get release year from a HDF5 song file, by default the first song in it
     """
     return h5.root.musicbrainz.songs.cols.year[songidx]
+
+#Below are functions which were not in the original file but were included here for convenience
+def get_function_data_name_pairs():
+    with open('hdf5_getters.py', 'r') as file:
+        for line in file:
+            l = line.split(" ")
+            if l[0] != "def":
+                continue
+            
+            function_name = l[1].split("_")
+            if function_name[0] != "get":
+                continue
+            
+            
+            data_name = line.split("(")[0].split(" ")[1][4:]
+            print(f"(h5g.get_{data_name}, '{data_name}'),")
+
+#Output taken from get_function_data_name_pairs and pasted in here
+FUNCTION_DATA_PAIRS = [
+    (get_num_songs, 'num_songs'),
+    (get_artist_familiarity, 'artist_familiarity'),
+    (get_artist_hotttnesss, 'artist_hotttnesss'),
+    (get_artist_id, 'artist_id'),
+    (get_artist_mbid, 'artist_mbid'),
+    (get_artist_playmeid, 'artist_playmeid'),
+    (get_artist_7digitalid, 'artist_7digitalid'),
+    (get_artist_latitude, 'artist_latitude'),
+    (get_artist_longitude, 'artist_longitude'),
+    (get_artist_location, 'artist_location'),
+    (get_artist_name, 'artist_name'),
+    (get_release, 'release'),
+    (get_release_7digitalid, 'release_7digitalid'),
+    (get_song_id, 'song_id'),
+    (get_song_hotttnesss, 'song_hotttnesss'),
+    (get_title, 'title'),
+    (get_track_7digitalid, 'track_7digitalid'),
+    (get_similar_artists, 'similar_artists'),
+    (get_artist_terms, 'artist_terms'),
+    (get_artist_terms_freq, 'artist_terms_freq'),
+    (get_artist_terms_weight, 'artist_terms_weight'),
+    (get_analysis_sample_rate, 'analysis_sample_rate'),
+    (get_audio_md5, 'audio_md5'),
+    (get_danceability, 'danceability'),
+    (get_duration, 'duration'),
+    (get_end_of_fade_in, 'end_of_fade_in'),
+    (get_energy, 'energy'),
+    (get_key, 'key'),
+    (get_key_confidence, 'key_confidence'),
+    (get_loudness, 'loudness'),
+    (get_mode, 'mode'),
+    (get_mode_confidence, 'mode_confidence'),
+    (get_start_of_fade_out, 'start_of_fade_out'),
+    (get_tempo, 'tempo'),
+    (get_time_signature, 'time_signature'),
+    (get_time_signature_confidence, 'time_signature_confidence'),
+    (get_track_id, 'track_id'),
+    (get_segments_start, 'segments_start'),
+    (get_segments_confidence, 'segments_confidence'),
+    (get_segments_pitches, 'segments_pitches'),
+    (get_segments_timbre, 'segments_timbre'),
+    (get_segments_loudness_max, 'segments_loudness_max'),
+    (get_segments_loudness_max_time, 'segments_loudness_max_time'),
+    (get_segments_loudness_start, 'segments_loudness_start'),
+    (get_sections_start, 'sections_start'),
+    (get_sections_confidence, 'sections_confidence'),
+    (get_beats_start, 'beats_start'),
+    (get_beats_confidence, 'beats_confidence'),
+    (get_bars_start, 'bars_start'),
+    (get_bars_confidence, 'bars_confidence'),
+    (get_tatums_start, 'tatums_start'),
+    (get_tatums_confidence, 'tatums_confidence'),
+    (get_artist_mbtags, 'artist_mbtags'),
+    (get_artist_mbtags_count, 'artist_mbtags_count'),
+    (get_year, 'year')
+]
+
+def get_everything(h5_file):
+    data = {}
+    for f, name in FUNCTION_DATA_PAIRS:
+        data[name] = f(h5_file)
+        
+    return data
