@@ -1,7 +1,18 @@
 # Project-1TD169
 The project aims to provide you with first hand experience of the challenges involved in approaching a new data engineering problem, while providing an opportunity to deepen the practical experience with some of the tools introduced during the course.
 
+# Example usage
+```
+from data_processing import create_processed_data_df 
+from interface import top_songs
 
+df, spark_session = create_processed_data_df(proportion)
+
+top_songs(df, "093cb74eb3c517c5179ae24caf0ebec51b24d2a2", 1).show()
+
+spark_session.stop()
+```
+## Development related information
 ## Git Workflow Instructions
 
 Welcome to our project! Follow these instructions to set up your environment and start contributing.
