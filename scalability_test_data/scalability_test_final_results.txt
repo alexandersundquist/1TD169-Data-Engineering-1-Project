@@ -1,0 +1,153 @@
+ubuntu@ville-friberg-elings-project-driver-good:~$ python3 scalability_test.py 
+!proportion= 0.0625
+!dynamic_allocation= False
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+25/03/20 19:29:52 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+!song_metadata_hdfs_time_elapsed= 1.1012871265411377
+!file_paths_to_cluster_time_elapsed= 2.5126380920410156                                                                                                                                                                       
++-----------+------------------+----------------+                                                                                                                                                                             
+|artist_name|           song_id|           title|
++-----------+------------------+----------------+
+|     Casual|SOMZWCG12A8C13C480|I Didn't Mean To|
++-----------+------------------+----------------+
+only showing top 1 row
+
+!song_metadata_preprocessing= 29.977689743041992
+/home/ubuntu/.pyenv/versions/3.8.20/lib/python3.8/site-packages/pyspark/sql/context.py:113: FutureWarning: Deprecated in 3.0.0. Use SparkSession.builder.getOrCreate() instead.
+  warnings.warn(
+!hdfs_user_data_read_time= 61.636494398117065                                                                                                                                                                                 
+#irrelevant output:+------------------+------------------+--------------------+--------------------+----------+                                                                                                               
+|           song_id|       artist_name|               title|             user_id|play_count|
++------------------+------------------+--------------------+--------------------+----------+
+|SONQBUB12A6D4F8ED0|The Rolling Stones|Angie (1993 Digit...|b64cdd1a0bd907e5e...|         2|
++------------------+------------------+--------------------+--------------------+----------+
+only showing top 1 row
+
+!merged_df_time= 37.89114809036255
+#create df done
++-----+-----------+
+|title|Total_plays|
++-----+-----------+
++-----+-----------+
+
+#top songe done
+!time_elapsed= 137.75153422355652
+!proportion= 0.125
+!dynamic_allocation= False
+!song_metadata_hdfs_time_elapsed= 0.8480830192565918
+!file_paths_to_cluster_time_elapsed= 3.2562029361724854                                                                                                                                                                       
++-----------+------------------+----------------+                                                                                                                                                                             
+|artist_name|           song_id|           title|
++-----------+------------------+----------------+
+|     Casual|SOMZWCG12A8C13C480|I Didn't Mean To|
++-----------+------------------+----------------+
+only showing top 1 row
+
+!song_metadata_preprocessing= 80.5418689250946
+!hdfs_user_data_read_time= 13.275305032730103                                                                                                                                                                                 
+#irrelevant output:+------------------+------------------+--------------------+--------------------+----------+                                                                                                               
+|           song_id|       artist_name|               title|             user_id|play_count|
++------------------+------------------+--------------------+--------------------+----------+
+|SONQBUB12A6D4F8ED0|The Rolling Stones|Angie (1993 Digit...|b64cdd1a0bd907e5e...|         2|
++------------------+------------------+--------------------+--------------------+----------+
+only showing top 1 row
+
+!merged_df_time= 14.209048509597778
+#create df done
++-----+-----------+
+|title|Total_plays|
++-----+-----------+
++-----+-----------+
+
+#top songe done
+!time_elapsed= 113.15185332298279
+!proportion= 0.25
+!dynamic_allocation= False
+!song_metadata_hdfs_time_elapsed= 1.0413923263549805
+!file_paths_to_cluster_time_elapsed= 2.9281840324401855                                                                                                                                                                       
++-----------+------------------+----------------+                                                                                                                                                                             
+|artist_name|           song_id|           title|
++-----------+------------------+----------------+
+|     Casual|SOMZWCG12A8C13C480|I Didn't Mean To|
++-----------+------------------+----------------+
+only showing top 1 row
+
+!song_metadata_preprocessing= 309.163348197937
+!hdfs_user_data_read_time= 32.196247816085815                                                                                                                                                                                 
+#irrelevant output:+------------------+------------------+--------------------+--------------------+----------+                                                                                                               
+|           song_id|       artist_name|               title|             user_id|play_count|
++------------------+------------------+--------------------+--------------------+----------+
+|SONQBUB12A6D4F8ED0|The Rolling Stones|Angie (1993 Digit...|b64cdd1a0bd907e5e...|         2|
++------------------+------------------+--------------------+--------------------+----------+
+only showing top 1 row
+
+!merged_df_time= 16.017425060272217
+#create df done
++-----+-----------+
+|title|Total_plays|
++-----+-----------+
++-----+-----------+
+
+#top songe done
+!time_elapsed= 362.1840286254883
+!proportion= 0.5
+!dynamic_allocation= False
+!song_metadata_hdfs_time_elapsed= 0.8713669776916504
+!file_paths_to_cluster_time_elapsed= 3.257089853286743                                                                                                                                                                        
++-----------+------------------+----------------+                                                                                                                                                                             
+|artist_name|           song_id|           title|
++-----------+------------------+----------------+
+|     Casual|SOMZWCG12A8C13C480|I Didn't Mean To|
++-----------+------------------+----------------+
+only showing top 1 row
+
+!song_metadata_preprocessing= 1170.7073993682861
+!hdfs_user_data_read_time= 13.737499713897705                                                                                                                                                                                 
+#irrelevant output:+------------------+-----------+-------+--------------------+----------+                                                                                                                                   
+|           song_id|artist_name|  title|             user_id|play_count|
++------------------+-----------+-------+--------------------+----------+
+|SONJBQX12A6D4F8382|  Daft Punk|Da Funk|b64cdd1a0bd907e5e...|         4|
++------------------+-----------+-------+--------------------+----------+
+only showing top 1 row
+
+!merged_df_time= 14.33604383468628
+#create df done
++-----+-----------+=====================================================================================>                                                                                                       (11 + 8) / 23]
+|title|Total_plays|
++-----+-----------+
++-----+-----------+
+
+#top songe done
+!time_elapsed= 1203.8839657306671
+!proportion= 1
+!song_metadata_hdfs_time_elapsed= 0.9450392723083496
+!file_paths_to_cluster_time_elapsed= 2.851166248321533                                                                                                                                                                        
+                                                                                                                                                                                                                  (0 + 2) / 2]
+
+#irrelevant output:+-----------+------------------+----------------+                                                                                                                                                          
+|artist_name|           song_id|           title|
++-----------+------------------+----------------+
+|     Casual|SOMZWCG12A8C13C480|I Didn't Mean To|
++-----------+------------------+----------------+
+only showing top 1 row
+
+!song_metadata_preprocessing= 2656.31609416008
+!hdfs_user_data_read_time= 41.00818943977356                                                                                                                                                                                            
+#irrelevant output:+------------------+-----------+-----------------+--------------------+----------+                                                                                                                         
+|           song_id|artist_name|            title|             user_id|play_count|
++------------------+-----------+-----------------+--------------------+----------+
+|SOWEZSI12A81C21CE6|Gipsy Kings|Tu Quieres Volver|b80344d063b5ccb32...|         1|
++------------------+-----------+-----------------+--------------------+----------+
+only showing top 1 row
+
+!merged_df_time= 42.629231691360474
+#create df done
++--------------------+-----------+                                                                                                                                                                                            
+|               title|Total_plays|
++--------------------+-----------+
+|Given Up (Album V...|         30|
++--------------------+-----------+
+
+#top songe done
+!time_elapsed= 2783.845406293869

@@ -1,7 +1,8 @@
 import time
 from data_processing import create_processed_data_df 
 from interface import top_songs
-PROPORTIONS_OF_DATASET_TO_TEST = [0.125, 0.25, 0.5, 0.75, 1]
+PROPORTIONS_OF_DATASET_TO_TEST = [0.0625, 0.125, 0.25, 0.5, 1]
+
 
 for proportion in PROPORTIONS_OF_DATASET_TO_TEST:
     print("!proportion=",proportion)

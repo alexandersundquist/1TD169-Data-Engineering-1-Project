@@ -12,7 +12,7 @@ from pyspark.sql import functions as F
 from pyspark.sql import SparkSession, SQLContext
 from pyspark.sql.functions import udf
 from pyspark.sql.types import StringType
-
+import time
 
 #Config constants
 HDFS_HOST = "192.168.2.31"
@@ -28,17 +28,22 @@ RELEVANT_FIELDS: List[str] = [
         'song_id'
 ]
 
+def time_df_after_applied_action(df, name):
+    start = time.time()
+    print("#irrelevant output:", end="")
+    df.show(1)
+    total_time_elapsed = time.time() - start
+    print(f"!{name}_time=",total_time_elapsed)
 
-
-def create_processed_data_df(subset_proprtion=1):
+def create_processed_data_df(subset_proprtion):
     os.environ['PYSPARK_PYTHON'] = "python3"
     os.environ['PYSPARK_DRIVER_PYTHON'] = sys.executable
 
     spark_session :SparkSession = SparkSession.builder \
         .master(SPARK_CLUSTER_URL) \
         .appName("spark_preprocess_driver") \
-        .config("spark.dynamicAllocation.enabled", True) \
-        .config("spark.executor.memory", "1g") \
+        .config("spark.dynamicAllocation.enabled", False) \
+        .config("spark.executor.memory", "4g") \
         .config("spark.driver.memory", "1g") \
         .config("spark.driver.maxResultSize", "1g") \
         .getOrCreate()
@@ -56,14 +61,23 @@ def create_processed_data_df(subset_proprtion=1):
     #NOTE: in case of a humongous amount of files, this will make the driver run out of memory.
     #In that case, recursion has to be implemented manually. Potential scalability weakness but
     #not close to being an issue in our case
+    song_metadata_hdfs_time_start = time.time()
     hdfs_client = Client(HDFS_HOST, HDFS_PORT)
     folder_to_h5_files = \
         lambda folder_path: [file_metadata["path"]  for file_metadata in list(hdfs_client.ls([folder_path], recurse=True)) \
         if file_metadata["file_type"] == "f" and file_metadata["path"].split(".")[-1] == "h5"]
     h5_file_paths_list = folder_to_h5_files(MSD_FOLDER_PATH_IN_HDFS)
+    song_metadata_hdfs_time_elapsed = time.time() -song_metadata_hdfs_time_start
+    print("!song_metadata_hdfs_time_elapsed=", song_metadata_hdfs_time_elapsed)
     if subset_proprtion != 1:
         h5_file_paths_list = h5_file_paths_list[0:round(len(h5_file_paths_list)*subset_proprtion)]
-    h5_file_paths_rdd = spark_context.parallelize(h5_file_paths_list)
+    
+    h5_file_paths_rdd = spark_context.parallelize(h5_file_paths_list).cache()
+    
+    file_paths_to_cluster_time_start = time.time()
+    h5_file_paths_rdd.top(1)
+    file_paths_to_cluster_time_elapsed = time.time() -file_paths_to_cluster_time_start
+    print("!file_paths_to_cluster_time_elapsed=", file_paths_to_cluster_time_elapsed)
     
     def get_relevant_metadata_of_song_file(file_path):
         client = Client(HDFS_HOST, HDFS_PORT)
@@ -86,15 +100,27 @@ def create_processed_data_df(subset_proprtion=1):
         
         return relevant_data
     
+    
+    song_metadata_preprocessing_start_time = time.time()
     song_data_df = spark_session.read.json(h5_file_paths_rdd.map(get_relevant_metadata_of_song_file))
     for column in song_data_df.columns:
         song_data_df = song_data_df.withColumn(
             column, F.regexp_replace(F.col(column), r"^b[\"']|[\"']$", "")
         )
+        
+    song_data_df = song_data_df.cache()
+    song_data_df.show(1)
+    song_metadata_preprocessing_elapsed = time.time() - song_metadata_preprocessing_start_time
+    print("!song_metadata_preprocessing=",song_metadata_preprocessing_elapsed)
     
     sqlContext = SQLContext(spark_session.sparkContext)
-    user_data = sqlContext.read.csv(HDFS_BASE + USER_LISTENING_DATA_PATH_IN_HDFS, sep="\t", header=False, inferSchema=True).toDF("user_id", "song_id", "play_count")
+    
+    hdfs_read_time_start = time.time()
+    user_data = sqlContext.read.csv(HDFS_BASE + USER_LISTENING_DATA_PATH_IN_HDFS, sep="\t", header=False, inferSchema=True).toDF("user_id", "song_id", "play_count").cache()
+    hdfs_read_time_elapsed = time.time() - hdfs_read_time_start
+    print("!hdfs_user_data_read_time=",hdfs_read_time_elapsed)
+    
     
     merged_df = song_data_df.join(user_data, on='song_id', how='inner').cache()
-    
+    time_df_after_applied_action(merged_df, "merged_df")
     return merged_df, spark_context
