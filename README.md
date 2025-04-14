@@ -1,7 +1,15 @@
-# Project-1TD169
-The project aims to provide you with first hand experience of the challenges involved in approaching a new data engineering problem, while providing an opportunity to deepen the practical experience with some of the tools introduced during the course.
+# 1TD169 Data Engineering 1 Project
+Repo for the course project in 1TD169 Data Engineering 1
 
-# Example usage
+## Project objectives 
+The project aimed to provide us with first hand experience of the challenges involved in approaching a new data engineering problem, while providing an opportunity to deepen the practical experience with some of the tools introduced during the course.
+
+## Project outcome
+We developed a data engineering pipeline that was used to analyze the [million song dataset](http://millionsongdataset.com/) in order to provide the top listened to artists and songs for each user.
+
+We used Hadoop's HDFS to scalably store the large data set on multiple nodes and used an Apache Spark cluster to allow for parallel and scalable analysis.
+
+## Example usage
 ```
 from data_processing import create_processed_data_df 
 from interface import top_songs
